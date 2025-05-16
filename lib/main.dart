@@ -1,50 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:gato/db.dart';
 
-void main() {
+import 'package:flutter/material.dart';
+import 'package:gato/gatos.dart';
+
+void main(List<String> args) {
   runApp(MyApp());
 }
-
-final TextEditingController nombre = TextEditingController();
-String nameString = nombre.text;
-
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-  final dbHelper = DatabaseHelper();
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
-      home: Scaffold(
-        body: Center(
-            child: Column(
-          children: <Widget>[
-            Text('Data: '),
-            TextField(
-              controller: nombre,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(onPressed: agregar, child: Text('Agregar')),
-            
-            ElevatedButton(onPressed: mostrar, child: Text('Mostrar')),
-            SizedBox(
-              height: 10,
-            ),
-            Text('Todos tus Gatos son los siguientes: ',
-            ),
-            Text(''),
-          ],
-        )),
-      ),
+      title: 'App de Gatos',
+      home: Gatos(), // Aquí va tu widget con el Scaffold
+      debugShowCheckedModeBanner: false,
     );
-  }
-
-  void agregar() async {
-    await dbHelper.addData(nameString);
-  }
-  void mostrar() async{
-    await dbHelper.mostrar();
   }
 }

@@ -17,6 +17,7 @@ class DatabaseHelper{
       );
   }
 
+
   Future<void> addData(String nombre) async{
     final database = await opendatabase();
     await database.insert(
@@ -26,7 +27,13 @@ class DatabaseHelper{
        print('Nuevo gato: '+ nombre);
        await database.close();
   }
+  
+  Future<void> editData(String nombre, int id) async{
+    final database = await opendatabase();
+    await database.update('gatos', {'name': nombre}, where: 'id = ?', whereArgs: [id]);
+    }
 
+  
   Future<void> mostrar() async{
     final database = await opendatabase();
     final data = await database.query('gatos');
@@ -34,4 +41,22 @@ class DatabaseHelper{
 
     await database.close();
   }
+  Future<List<Map<String,dynamic>>> obtener() async{
+    final database = await opendatabase();
+    final data = await database.query('gatos');
+    print (data);
+
+    await database.close();
+    return data;
+  }
+   Future<void> eliminar(int id) async{
+    final database = await opendatabase();
+    final deleterows = await database.delete('gatos', where: 'id=?'  ,whereArgs: [id] );
+    
+    print (deleterows);
+
+    await database.close();
+  }
+
+  
 }
